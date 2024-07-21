@@ -1,0 +1,66 @@
+const express = require('express');
+const path = require('path');
+const sqlite3 = require('sqlite3').verbose();
+const bodyParser = require('body-parser');
+
+const app = express();
+const port = 3000;
+
+// Initialize SQLite database
+const db = new sqlite3.Database(':memory:');
+
+// Create tables
+db.serialize(() => {
+    db.run(`CREATE TABLE prescriptions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        patientId TEXT,
+        medications TEXT,
+        dosage TEXT,
+        remarks TEXT
+    )`);
+
+    db.run(`CREATE TABLE treatment_plans (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        patientName TEXT,
+        condition TEXT,
+        title TEXT,
+        description TEXT,
+        goals TEXT,
+        remarks TEXT
+    )`);
+});
+
+// Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Routes
+app.post('/prescription', (req, res) => {
+    const { patientId, medications, dosage, remarks } = req.body;
+    db.run('INSERT INTO prescriptions (patientId, medications, dosage, remarks) VALUES (?, ?, ?, ?)', [patientId, medications, dosage, remarks], function(err) {
+        if (err) {
+            return res.status(500).json({ success: false, error: err.message });
+        }
+        res.json({ success: true, id: this.lastID });
+    });
+});
+
+app.post('/treatmentplan', (req, res) => {
+    const { patientName, condition, title, description, goals, remarks } = req.body;
+    db.run('INSERT INTO treatment_plans (patientName, condition, title, description, goals, remarks) VALUES (?, ?, ?, ?, ?, ?)', [patientName, condition, title, description, goals, remarks], function(err) {
+        if (err) {
+            return res.status(500).json({ success: false, error: err.message });
+        }
+        res.json({ success: true, id: this.lastID });
+    });
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'doc2.html'));
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});

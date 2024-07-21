@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+   
+    <div class="container" id="signInContainer"> 
+        <img src="fotor-ai-20240720211828.jpg" alt="" class="bg-image">
+        <div class="bg-img-title"><h2>Sign In</h2>
+        <form id="signInForm" method="POST" action="/login">
+            <input type="text" name="username" placeholder="Username" required oninput="resetCaptcha()">
+            <input type="password" name="password" placeholder="Password" required oninput="resetCaptcha()">
+            <div class="g-recaptcha" data-sitekey="6LcbvBQqAAAAAE5Rj5oYhMX3zvKf60eWW5yJJ295"></div>
+            <button type="submit">Sign In</button>
+        </form>
+        <div id="error" class="error"></div>
+        <p>Don't have an account? <a href="#" id="showSignUp">Sign Up</a></p>
+    </div>
+</div>
+    <div class="container" id="signUpContainer" style="display: none;">
+        <img src="fotor-ai-20240720211828.jpg" alt="" class="bg-image">
+        <div class="bg-img-title"><h2>Sign Up</h2>
+        <form id="signUpForm" method="POST" action="/signup">
+            <input type="text" name="username" placeholder="Username" required oninput="resetCaptcha()">
+            <input type="password" name="password" placeholder="Password" required oninput="resetCaptcha()">
+            <input type="text" name="name" placeholder="Name" required oninput="resetCaptcha()">
+            <input type="number" name="age" placeholder="Age" required oninput="resetCaptcha()">
+            <input type="text" name="gender" placeholder="Gender" required oninput="resetCaptcha()">
+            <input type="number" name="weight" placeholder="Weight (kg)" required oninput="resetCaptcha()">
+            <input type="number" name="height" placeholder="Height (cm)" required >
+            <div class="g-recaptcha" data-sitekey="6LcbvBQqAAAAAE5Rj5oYhMX3zvKf60eWW5yJJ295"></div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div id="signUpError" class="error"></div>
+        <p>Already have an account? <a href="#" id="showSignIn">Sign In</a></p>
+    </div>
+</div>
+
+    <script>
+        document.getElementById('showSignUp').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('signInContainer').style.display = 'none';
+            document.getElementById('signUpContainer').style.display = 'block';
+        });
+
+        document.getElementById('showSignIn').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('signUpContainer').style.display = 'none';
+            document.getElementById('signInContainer').style.display = 'block';
+        });
+
+        document.getElementById('signInForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: form.method,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams(formData)
+            });
+            const result = await response.json();
+            if (result.success) {
+                window.location.href = '/dashboard?username=' + formData.get('username');
+            } else {
+                document.getElementById('error').textContent = result.message;
+            }
+        });
+
+        document.getElementById('signUpForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: form.method,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams(formData)
+            });
+            const result = await response.json();
+            if (result.success) {
+                window.location.href = '/dashboard?username=' + formData.get('username');
+            } else {
+                document.getElementById('signUpError').textContent = result.message;
+            }
+        });
+        let lastPasswordValue = ''; // Track the last password input value
+
+function resetCaptcha() {
+    const recaptchaContainer = document.querySelector('.g-recaptcha');
+    const recaptchaWidgetId = grecaptcha.getResponse(); // Retrieve the current reCAPTCHA widget ID
+    if (recaptchaWidgetId) {
+        grecaptcha.reset(); // Reset reCAPTCHA
+    }
+}
+
+function onPasswordChange() {
+    const passwordInput = document.getElementById('password');
+    const newPasswordValue = passwordInput.value;
+    
+    if (newPasswordValue !== lastPasswordValue) {
+        // Only reset CAPTCHA if password value has changed
+        resetCaptcha();
+        lastPasswordValue = newPasswordValue;
+    }
+}
+
+// Debounce function to limit how often onPasswordChange is called
+function debounce(func, delay) {
+    let timeoutId;
+    return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
+// Attach the debounced change handler to the password input
+document.getElementById('password').addEventListener('input', debounce(onPasswordChange, 500));
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .navbar {
+            background-color: #28a745; /* Green */
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .navbar-brand img {
+            height: 40px; /* Adjust logo height */
+            margin-right: 10px;
+        }
+
+        .navbar-brand span {
+            color: #fff;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"%3E%3Cpath stroke="rgba(255,255,255,.5)" stroke-width="2" d="M5 7h20M5 15h20M5 23h20"/%3E%3C/svg%3E');
+        }
+
+        .navbar-nav {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-item {
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 400px; /* Increased height */
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            font-size: 1rem;
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .btn-light {
+            background-color: #fff;
+            color: #28a745; /* Green */
+            border-color: #28a745;
+        }
+
+        .btn-light:hover {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .btn-success {
+            background-color: #28a745; /* Green */
+            border-color: #28a745;
+        }
+
+        .btn-success:hover {
+            background-color: #218838; /* Darker green */
+            border-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand mx-auto" href="#">
+                <img src="hospital-logo.png" alt="Hospital Logo">
+                <span>Doctor Dashboard</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="doc2.html">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card bg-success text-white text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Generate Prescription</h5>
+                        <p class="card-text">Generate a prescription for patients.</p>
+                        <a href="doctor.html" class="btn btn-light">Go to Prescription</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card bg-white text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Generate Treatment Plan</h5>
+                        <p class="card-text">Create a treatment plan for patients.</p>
+                        <a href="treatmentplan.html" class="btn btn-success">Go to Treatment Plan</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card bg-white text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Appointment Details</h5>
+                        <p class="card-text">Manage patient appointments.</p>
+                        <a href="appointment.html" class="btn btn-success">Go to Appointments</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (jQuery, Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

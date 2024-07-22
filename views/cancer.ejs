@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancer Treatment Plan</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #28a745; /* Green color */
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .navbar img {
+            height: 40px;
+            width: 40px;
+        }
+
+        .navbar .dropdown {
+            position: relative;
+        }
+
+        .navbar .dropdown select {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #fff;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .navbar .dropdown select:focus {
+            outline: none;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Styling */
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-container input[type="text"], .form-container input[type="number"], .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .generate-button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .generate-button:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .navbar h1 {
+                font-size: 20px;
+            }
+
+            .navbar .dropdown select {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .form-container {
+                padding: 15px;
+            }
+
+            .form-container h2 {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+
+            .form-container textarea {
+                height: 120px;
+            }
+
+            .generate-button {
+                width: 100%;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <img src="hospital-logo.png" alt="Hospital Logo"> <!-- Placeholder for hospital logo -->
+        <h1>Cancer Treatment Plan</h1>
+        <div class="dropdown">
+            <select id="treatment-select" onchange="handleTreatmentChange()">
+                <option value="">Select Treatment Plan</option>
+                <option value="pregnancy">Pregnancy Treatment Plan</option>
+                <option value="cancer">Cancer Treatment Plan</option>
+                <option value="long-term">Long-term Disease Treatment Plan</option>
+                <option value="customize">Customize Treatment Plan</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-container">
+            <h2>Add Cancer Treatment Plan</h2>
+            <form id="cancer-form" action="/cancer/add" method="post">
+                <label for="patient-name">Patient Name</label>
+                <input type="text" id="patient-name" name="patientName" placeholder="Enter patient name" required>
+                
+                <label for="patient-age">Patient Age</label>
+                <input type="number" id="patient-age" name="patientAge" placeholder="Enter patient age" required>
+                
+                <label for="cancer-type">Type of Cancer</label>
+                <input type="text" id="cancer-type" name="cancerType" placeholder="Enter type of cancer" required>
+                
+                <label for="treatment-plan">Treatment Plan</label>
+                <textarea id="treatment-plan" name="treatmentPlan" placeholder="Enter treatment plan" required></textarea>
+                
+                <label for="current-medications">Current Medications</label>
+                <textarea id="current-medications" name="currentMedications" placeholder="Enter current medications" required></textarea>
+                
+                <label for="recommended-treatments">Recommended Treatments</label>
+                <textarea id="recommended-treatments" name="recommendedTreatments" placeholder="Enter recommended treatments" required></textarea>
+                
+                <label for="exams-and-tests">Exams and Tests</label>
+                <textarea id="exams-and-tests" name="examsAndTests" placeholder="Enter exams and tests" required></textarea>
+                
+                <label for="treatment-goals">Treatment Goals</label>
+                <textarea id="treatment-goals" name="treatmentGoals" placeholder="Enter treatment goals" required></textarea>
+                
+                <label for="additional-notes">Additional Notes</label>
+                <textarea id="additional-notes" name="additionalNotes" placeholder="Enter additional notes"></textarea>
+                
+                <button type="submit" class="generate-button">Add Treatment Plan</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function handleTreatmentChange() {
+            const value = document.getElementById('treatment-select').value;
+            if (value === 'doctor') {
+                window.location.href = 'doctor.html'; // Redirect to the Doctor Prescription page
+            } else if (value === 'pregnancy') {
+                window.location.href = 'pregnancy.html'; // Redirect to the Pregnancy Treatment Plan page
+            } else if (value === 'customize') {
+                window.location.href = 'customize-treatment-plan.html'; // Redirect to the Customize Treatment Plan page
+            } else if (value === 'long-term') {
+                window.location.href = 'long-term-disease-treatment-plan.html'; // Redirect to the Long-term Disease Treatment Plan page
+            }
+        }
+    </script>
+</body>
+</html>
